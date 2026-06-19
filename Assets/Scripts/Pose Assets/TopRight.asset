@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57720f24d1569ec49b2ab7719a3c877a, type: 3}
+  m_Name: TopRight
+  m_EditorClassIdentifier: 
+  poseName: TopRight
+  localPosition: {x: 0.5, y: 0.3, z: 0.9}
+  localEulerRotation: {x: 0.00000042688683, y: 18.300003, z: 330}
+  attackTrigger: SwingTRDLTrigger
+  chainPose: {fileID: 11400000, guid: 0eed80e35b3b32d4aa8c87cd366531b6, type: 2}
+  possibleComboPose:
+  - {fileID: 11400000, guid: 0eed80e35b3b32d4aa8c87cd366531b6, type: 2}
+  - {fileID: 11400000, guid: 7e980c008e605f64f8dc0c435ca2e471, type: 2}

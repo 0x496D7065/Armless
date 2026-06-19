@@ -1,0 +1,57 @@
+# ==================================
+# Unity Project .gitignore
+# ==================================
+
+# === Unity generated folders ===
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+UserSettings/
+
+# === OS junk ===
+.DS_Store
+Thumbs.db
+
+# === IDE junk ===
+.vs/
+.vscode/
+.vsconfig
+.idea/
+*.sln
+*.csproj
+*.user
+*.unityproj
+*.pidb
+*.booproj
+
+# === Unity cache ===
+MemoryCaptures/
+*.stacktrace
+*.bak
+*.tmp
+
+# === Builds ===
+*.apk
+*.aab
+*.exe
+*.app
+*.ipa
+
+# === Crash dumps ===
+*.dmp
+
+# === Unity Asset Store tools ===
+.assetstoretools*
+
+# === Rider/JetBrains ===
+*.sln.iml
+
+# === Unity Collaborate ===
+.collab/
+
+# === Plastic SCM ===
+.plastic/
+.ignore
