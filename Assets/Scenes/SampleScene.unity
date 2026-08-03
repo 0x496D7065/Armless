@@ -559,7 +559,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.1030002, z: 0}
+  m_LocalPosition: {x: 0, y: 4.143, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -812,6 +812,8 @@ GameObject:
   - component: {fileID: 569817351}
   - component: {fileID: 569817355}
   - component: {fileID: 569817350}
+  - component: {fileID: 569817357}
+  - component: {fileID: 569817356}
   m_Layer: 9
   m_Name: PlayerRoot
   m_TagString: Untagged
@@ -932,7 +934,7 @@ CharacterController:
     m_Bits: 256
   m_LayerOverridePriority: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Height: 1.83
   m_Radius: 0.5
@@ -948,7 +950,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 569817349}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 869c2f3f192930f46b626419de1a846b, type: 3}
   m_Name: 
@@ -984,7 +986,7 @@ Transform:
   m_GameObject: {fileID: 569817349}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.62, z: 0}
+  m_LocalPosition: {x: 0, y: 3.66, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1094,11 +1096,74 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 9caa3d8a-6b2f-4e8e-8bad-6ede561bd9be
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ce8a52e3-8a70-434f-9622-ecf99c7a1473
+    m_ActionName: 'Player/Dodge[/Keyboard/leftShift]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 330585545}
+--- !u!114 &569817356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 569817349}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fddc9e85a3a497438bc06878a13c6a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveActionReference: {fileID: -1680190386980627800, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  jumpActionReference: {fileID: -2099379676528639254, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  dodgeActionReference: {fileID: -5647103721548489861, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  cameraTransform: {fileID: 330585546}
+  moveSpeed: 8
+  acceleration: 60
+  deceleration: 60
+  airControlMultiplier: 0.6
+  gravityMultiplier: 3
+  groundCheckDistance: 1
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 192
+  jumpForce: 9
+  coyoteTime: 0.1
+  jumpBufferTime: 0.1
+  dashSpeed: 22
+  dashDuration: 0.15
+  dashCooldown: 0.2
+  dashIgnoresGravity: 1
+--- !u!54 &569817357
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 569817349}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 192
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -1230,12 +1295,12 @@ CapsuleCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.49777424
   m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: -0.0022257566, y: 0, z: 0}
 --- !u!23 &1163292292
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1672,7 +1737,7 @@ Transform:
   m_GameObject: {fileID: 2147337571}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.1030002, z: 0}
+  m_LocalPosition: {x: 0, y: 4.143, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
