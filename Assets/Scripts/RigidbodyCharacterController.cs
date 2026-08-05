@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System;
 
 /// <summary>
 /// Leave "Camera Transform" empty to auto-use Camera.main. Works fine with Cinemachine,
@@ -38,6 +39,13 @@ public class RigidbodyCharacterController : MonoBehaviour
     [SerializeField] private float dashDuration = 0.15f;
     [SerializeField] private float dashCooldown = 0.4f;
     [SerializeField] private bool dashIgnoresGravity = true;
+
+    /// <summary>
+    /// Optional external hook that scales ApplyMovement's target speed (grounded and air
+    /// alike). Never read by ApplyDash — this controller has zero
+    /// knowledge of what's driving it or why. Returns 1f (no change) if left unassigned.
+    /// </summary>
+    public Func<float> ExternalSpeedMultiplier;
 
     private Rigidbody rb;
     private InputAction moveAction;
@@ -235,7 +243,8 @@ public class RigidbodyCharacterController : MonoBehaviour
     {
         Vector3 wishDir = GetCharacterRelativeDirection(moveInput);
 
-        Vector3 targetVelocity = wishDir * moveSpeed;
+        float speedMultiplier = ExternalSpeedMultiplier != null ? ExternalSpeedMultiplier() : 1f;
+        Vector3 targetVelocity = wishDir * moveSpeed * speedMultiplier;
         Vector3 currentVelocity = rb.linearVelocity;
         Vector3 flatVelocity = new Vector3(currentVelocity.x, 0f, currentVelocity.z);
 
