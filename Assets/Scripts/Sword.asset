@@ -21,16 +21,16 @@ MonoBehaviour:
     maxDuration: 3
     attackMoveSpeedMultiplier: 1
     nextAttackIndex: 1
-    damage: 0
+    damage: 30
   - attackName: Left to Right
     animationStateName: SwingLR
     maxDuration: 3
     attackMoveSpeedMultiplier: 1
     nextAttackIndex: 2
-    damage: 0
+    damage: 30
   - attackName: TopRight to DownLeft
     animationStateName: SwingTRDL
     maxDuration: 3
     attackMoveSpeedMultiplier: 1
     nextAttackIndex: 0
-    damage: 0
+    damage: 40

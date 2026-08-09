@@ -5,9 +5,9 @@ public class BladeTrigger : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("TRIGGER: " + other.name);
-        ragdoll ragdollScript = other.gameObject.GetComponentInParent<ragdoll>();
+        Ragdoll ragdollScript = other.gameObject.GetComponentInParent<Ragdoll>();
 
-        if (ragdollScript != null)
-            ragdollScript.TakeDamage();
+        //if (ragdollScript != null)
+            //ragdollScript.TakeDamage();
     }
 }

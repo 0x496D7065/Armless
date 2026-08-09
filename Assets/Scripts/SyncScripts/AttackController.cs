@@ -40,6 +40,9 @@ public class AttackController : MonoBehaviour
         "No mid-fight switching support.")]
     [SerializeField] private WeaponData equippedWeapon;
 
+    [Tooltip("Damage of the attack currently playing, for WeaponHitbox to read when it opens. 0 if idle.")]
+    public float CurrentAttackDamage => CurrentAttack?.damage ?? 0f;
+
     [Header("Animation")]
     [Tooltip("The Animator that plays this weapon's attack clips. Usually lives on the " +
         "same object as this component (the weapon), NOT the character.")]

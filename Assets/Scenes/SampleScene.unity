@@ -1850,6 +1850,8 @@ GameObject:
   - component: {fileID: 1497359744}
   - component: {fileID: 1497359743}
   - component: {fileID: 1497359742}
+  - component: {fileID: 1497359746}
+  - component: {fileID: 1497359745}
   m_Layer: 0
   m_Name: SwordVisual (1)
   m_TagString: Untagged
@@ -1913,8 +1915,8 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -1940,6 +1942,43 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1497359745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1497359740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f058d6869f21df4c925b36ef0b6e5f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackController: {fileID: 1497359742}
+  ownerRoot: {fileID: 569817354}
+--- !u!136 &1497359746
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1497359740}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.16943398
+  m_Height: 1.3247244
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.6, z: 0}
 --- !u!1 &1661647841
 GameObject:
   m_ObjectHideFlags: 0
@@ -2436,6 +2475,68 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2005331514}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &2096454067 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1509610381272930024, guid: 62cb23cd010d5e2468217f805ff405a0, type: 3}
+  m_PrefabInstance: {fileID: 279404443684734755}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2096454068 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3768909834290397041, guid: 62cb23cd010d5e2468217f805ff405a0, type: 3}
+  m_PrefabInstance: {fileID: 279404443684734755}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2096454067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ee0aaf9e49a527489bd70acfbd4976d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2096454070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2096454067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b70a7c5ab8a3d2640bcc12aa14eebbda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  isInvulnerable: 0
+  preventDeath: 0
+  logDamageToConsole: 1
+  onDamaged:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onDeath:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2096454068}
+        m_TargetAssemblyTypeName: Ragdoll, Assembly-CSharp
+        m_MethodName: ActivateRagdoll
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2147337571
 GameObject:
   m_ObjectHideFlags: 0
@@ -2661,7 +2762,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1509610381272930024, guid: 62cb23cd010d5e2468217f805ff405a0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2096454070}
   m_SourcePrefab: {fileID: 100100000, guid: 62cb23cd010d5e2468217f805ff405a0, type: 3}
 --- !u!4 &291035146523746159
 Transform:
