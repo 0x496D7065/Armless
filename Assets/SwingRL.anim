@@ -614,15 +614,22 @@ AnimationClip:
   m_HasGenericRootTransform: 1
   m_HasMotionFloatCurves: 0
   m_Events:
-  - time: 0.55
-    functionName: ChainWindowEntered
+  - time: 0.53333336
+    functionName: OnComboWindowOpen
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.6166667
+    functionName: OnComboWindowClose
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
   - time: 1
-    functionName: OnAttackFinished
+    functionName: OnAttackEnd
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

@@ -1,9 +1,10 @@
 using UnityEngine;
 
 /// <summary>
-/// Data for a single attack in a weapon's combo chain. Pure data
-/// the AttackController reads this to know what to play and when
-/// the next input is accepted.
+/// Data for a single attack in a weapon's combo chain. Timing (combo window open/close,
+/// attack end) is driven by Animation Events placed on the clip itself — NOT by fields
+/// here — so behavior stays correct even if attack speed changes (animator.speed on a
+/// dedicated combat layer, etc). See AttackController.OnComboWindowOpen/Close/OnAttackEnd.
 /// </summary>
 [System.Serializable]
 public class ComboAttackData
@@ -16,18 +17,9 @@ public class ComboAttackData
     [Tooltip("Name of the Animator state to CrossFade into for this attack.")]
     public string animationStateName;
 
-    [Tooltip("Total duration of this attack, in seconds. Drives timing for the " +
-        "combo window and movement speed penalty below.")]
-    public float duration = 0.5f;
-
-    [Header("Combo Window")]
-    [Tooltip("Normalized time (0-1 of duration) after which pressing attack again " +
-        "will queue the next combo attack instead of being ignored.")]
-    [Range(0f, 1f)] public float comboWindowStart = 0.5f;
-
-    [Tooltip("Normalized time (0-1 of duration) after which the combo window closes. " +
-        "If no input was queued by then, the combo resets to idle.")]
-    [Range(0f, 1f)] public float comboWindowEnd = 0.9f;
+    [Header("Safety Timeout")]
+    [Tooltip("Fallback")]
+    public float maxDuration = 3f;
 
     [Header("Movement")]
     [Tooltip("Multiplies the character's move speed while this specific attack is " +
@@ -36,8 +28,8 @@ public class ComboAttackData
 
     [Header("Next Attack")]
     [Tooltip("Index into the weapon's combo array to play if the player queues an " +
-        "input during this attack's combo window. -1 means this attack ends the combo " +
-        "(next input starts back at index 0).")]
+        "input while the combo window is open (see Animation Events). -1 means this " +
+        "attack ends the combo (next input starts back at index 0).")]
     public int nextAttackIndex = -1;
 
     [Header("Damage (placeholder - not used yet)")]
