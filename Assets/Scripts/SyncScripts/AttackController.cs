@@ -28,7 +28,7 @@ using UnityEngine.InputSystem;
 /// a fixed scene object, or via Initialize() at spawn/equip time if weapons are
 /// instantiated dynamically.
 /// </summary>
-public class AttackController : MonoBehaviour
+public class AttackController : MonoBehaviour, IAttackDamageSource
 {
     private enum State { Idle, Attacking }
 

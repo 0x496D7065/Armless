@@ -23,9 +23,12 @@ using System.Collections.Generic;
 public class WeaponHitbox : MonoBehaviour
 {
     [Header("Source")]
-    [Tooltip("The AttackController driving this weapon. Used to read the current " +
+    [Tooltip("The AttackController (player) or EnemyAttackController (AI) driving this " +
+        "weapon. Referenced through IAttackDamageSource instead of " +
+        "a concrete type so this hitbox works for both. Used to read the current " +
         "attack's damage the moment the hitbox opens.")]
-    [SerializeField] private AttackController attackController;
+    [SerializeField] private MonoBehaviour damageSourceBehaviour;
+    private IAttackDamageSource damageSource;
 
     [Header("Owner")]
     [Tooltip("Root of the character wielding this weapon. Colliders under this root " +
@@ -47,8 +50,17 @@ public class WeaponHitbox : MonoBehaviour
         hitboxCollider.isTrigger = true;
         hitboxCollider.enabled = false; // closed until an Animation Event opens it
 
-        if (attackController == null)
-            Debug.LogError($"{nameof(WeaponHitbox)}: Attack Controller is not assigned.", this);
+        if (damageSourceBehaviour != null)
+        {
+            damageSource = damageSourceBehaviour as IAttackDamageSource;
+            if (damageSource == null)
+                Debug.LogError($"{nameof(WeaponHitbox)}: Damage Source Behaviour is " +
+                    $"assigned but doesn't implement {nameof(IAttackDamageSource)}.", this);
+        }
+        else
+        {
+            Debug.LogError($"{nameof(WeaponHitbox)}: Damage Source Behaviour is not assigned.", this);
+        }
     }
 
     // ---- Called via Animation Events placed on each attack's clip ----
@@ -56,7 +68,7 @@ public class WeaponHitbox : MonoBehaviour
     /// <summary>Placed as an Animation Event where the blade should start dealing damage.</summary>
     public void OnHitboxOpen()
     {
-        currentDamage = attackController != null ? attackController.CurrentAttackDamage : 0f;
+        currentDamage = damageSource != null ? damageSource.CurrentAttackDamage : 0f;
         hitTargetsThisWindow.Clear();
         isOpen = true;
         hitboxCollider.enabled = true;

@@ -30,11 +30,19 @@ public class Health : MonoBehaviour, IDamageable
     [Tooltip("Invoked once when health reaches 0 (only if Prevent Death is off).")]
     [SerializeField] private UnityEvent onDeath;
 
+    /// <summary>
+    /// Same moment as onDeath above, but a plain C# event instead of an Inspector-wired
+    /// UnityEvent for code that wants to subscribe without a designer having to drag
+    /// a reference into every prefab (e.g. EnemyAIController shutting itself down).
+    /// </summary>
+    public event System.Action Died;
+
     private float currentHealth;
     private bool isDead;
 
     public float CurrentHealth => currentHealth;
     public float MaxHealth => maxHealth;
+    public bool IsDead => isDead;
 
     private void Awake()
     {
@@ -65,6 +73,7 @@ public class Health : MonoBehaviour, IDamageable
         {
             isDead = true;
             onDeath?.Invoke();
+            Died?.Invoke();
         }
     }
 

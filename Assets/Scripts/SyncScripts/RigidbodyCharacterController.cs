@@ -13,10 +13,10 @@ public class RigidbodyCharacterController : MonoBehaviour
     [SerializeField] private InputActionReference jumpActionReference;
     [SerializeField] private InputActionReference dodgeActionReference;
 
-    [Header("Camera")]
-    [Tooltip("Leave empty to auto-use Camera.main. Works with Cinemachine since Cinemachine " +
-        "drives this same Transform/Camera component, it doesn't need a separate reference.")]
-    [SerializeField] private Transform cameraTransform;
+    [Header("Aim")]
+    [Tooltip("Provides the current aim-relative facing (driven directly by mouse input)." +
+        "See PlayerAimController.")]
+    [SerializeField] private PlayerAimController aimController;
 
     [Header("Movement")]
     [SerializeField] private float moveSpeed = 8f;
@@ -53,6 +53,7 @@ public class RigidbodyCharacterController : MonoBehaviour
     private InputAction dodgeAction;
 
     private Vector2 moveInput;
+    public Vector2 MoveInput => moveInput;
 
     private bool isDashing;
     private float dashTimer;
@@ -63,8 +64,9 @@ public class RigidbodyCharacterController : MonoBehaviour
     private float lastGroundedTime;
     private float lastJumpPressedTime = -999f;
 
-    // The character's own facing, re-synced to the camera's yaw every physics step.
-    // Movement/dash always read THESE, never the camera directly.
+    // The character's own facing, recomputed directly from the camera every physics
+    // step (see RefreshFacingFromCamera). Movement/dash read THESE cached vectors,
+    // never the camera directly.
     private Vector3 facingForward = Vector3.forward;
     private Vector3 facingRight = Vector3.right;
 
@@ -85,9 +87,8 @@ public class RigidbodyCharacterController : MonoBehaviour
             Debug.LogError($"{nameof(RigidbodyCharacterController)}: Jump Action Reference is not assigned.", this);
         if (dodgeAction == null)
             Debug.LogError($"{nameof(RigidbodyCharacterController)}: Dodge Action Reference is not assigned.", this);
-
-        if (cameraTransform == null && Camera.main != null)
-            cameraTransform = Camera.main.transform;
+        if (aimController == null)
+            Debug.LogError($"{nameof(RigidbodyCharacterController)}: Aim Controller is not assigned.", this);
     }
 
     private void OnEnable()
@@ -175,31 +176,28 @@ public class RigidbodyCharacterController : MonoBehaviour
         return dir.sqrMagnitude > 1f ? dir.normalized : dir;
     }
 
-    /// <summary>
-    /// Instantly snaps the character's yaw to match the camera's yaw (no smoothing/turn
-    /// speed, by design — response time over polish for now) and refreshes
-    /// facingForward/facingRight from it. Pitch/roll are ignored so the character stays
-    /// upright regardless of camera angle.
-    /// </summary>
-    private void SyncFacingWithCamera()
+    private void RefreshFacingFromCamera()
     {
-        if (cameraTransform == null)
+        if (aimController == null)
         {
             facingForward = transform.forward;
             facingRight = transform.right;
             return;
         }
 
-        Quaternion yawOnlyRotation = Quaternion.Euler(0f, cameraTransform.eulerAngles.y, 0f);
-        rb.MoveRotation(yawOnlyRotation);
+        facingForward = aimController.Forward;
+        facingRight = aimController.Right;
+    }
 
-        facingForward = yawOnlyRotation * Vector3.forward;
-        facingRight = yawOnlyRotation * Vector3.right;
+
+    private void LateUpdate()
+    {
+        //SyncFacingWithCamera();
     }
 
     private void FixedUpdate()
     {
-        SyncFacingWithCamera();
+        RefreshFacingFromCamera();
         CheckGrounded();
         TryConsumeJump();
 
